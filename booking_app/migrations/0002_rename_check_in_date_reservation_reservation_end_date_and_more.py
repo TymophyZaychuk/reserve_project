@@ -13,12 +13,12 @@ class Migration(migrations.Migration):
         migrations.RenameField(
             model_name='reservation',
             old_name='check_in_date',
-            new_name='reservation_end_date',
+            new_name='reservation_start_date',
         ),
         migrations.RenameField(
             model_name='reservation',
             old_name='check_out_date',
-            new_name='reservation_start_date',
+            new_name='reservation_end_date',
         ),
         migrations.RemoveField(
             model_name='hotel',
