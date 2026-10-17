@@ -1,21 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Booking</h1>
-    <h4>Available Hotels</h4>
+<div class="container my-5">
+    <!-- Навігація назад -->
+    <div class="mb-4">
+        <a href="{% url 'home' %}" class="text-decoration-none text-muted fw-semibold small">
+            <i class="bi bi-arrow-left"></i> Назад до списку готелів
+        </a>
+    </div>
 
-    
-    {% for hotel in hotels %}
-
-        <div class="card" style="width: 18rem;">
-        <img src="{{ hotel.image.url}}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title"> {{ hotel.hotel_name }}</h5>
-            <p class="card-text"> {{ hotel.price_per_night }}$ per night</p>
-            <a href="{% url 'hotel_page' hotel.id %}" class="btn btn-primary">Book Now</a>
+    <div class="row g-5 align-items-start">
+        <!-- Фото готелю -->
+        <div class="col-lg-6">
+            <div class="hotel-card border-0 shadow-sm overflow-hidden">
+                {% if hotel.image %}
+                    <img src="{{ hotel.image.url }}" class="card-img-top w-100" alt="{{ hotel.hotel_name }}" style="height: 450px; object-fit: cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/600x450?text=Hotel+Image" class="card-img-top w-100" alt="No image" style="height: 450px; object-fit: cover;">
+                {% endif %}
+            </div>
         </div>
-        </div>
-        
-    {% endfor %}
 
-{% endblock  %}
+        <!-- Інформація про готель -->
+        <div class="col-lg-6">
+            <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm border border-light">
+                <span class="badge bg-light text-dark border mb-3">Ексклюзивний готель</span>
+                <h1 class="display-5 fw-bold mb-3 text-dark">{{ hotel.hotel_name }}</h1>
+                
+                <p class="text-muted mb-3">
+                    <i class="bi bi-geo-alt text-warning"></i> {{ hotel.hotel_address }}
+                </p>
+                <p class="text-secondary mb-4">
+                    Тип номера: <strong class="text-dark">{{ hotel.get_room_type_display }}</strong> 
+                    <span class="mx-2">•</span> 
+                    Вільних номерів: <strong class="text-dark">{{ hotel.rooms }}</strong>
+                </p>
+
+                <hr class="my-4 text-muted opacity-25">
+
+                <h4 class="mb-3">Про цей готель</h4>
+                <p class="text-muted lh-lg mb-4">{{ hotel.description }}</p>
+
+                <!-- Блок ціни -->
+                <div class="d-flex align-items-center justify-content-between p-4 bg-light rounded-3 mb-4">
+                    <div>
+                        <span class="text-muted small d-block">Вартість проживання</span>
+                        <span class="fs-3 fw-bold text-dark">${{ hotel.price_per_night }}</span> <span class="text-muted small">/ ніч</span>
+                    </div>
+                </div>
+
+                <a href="#" class="btn btn-luxury w-100 py-3">
+                    <i class="bi bi-calendar-check me-2"></i> Забронювати номер у готелі
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

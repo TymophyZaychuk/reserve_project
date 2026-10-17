@@ -1,21 +1,75 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Booking</h1>
-    <h4>Available Hotels</h4>
-
-    
-    {% for hotel in hotels %}
-
-        <div class="card" style="width: 18rem;">
-        <img src="{{ hotel.image.url}}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title"> {{ hotel.hotel_name }}</h5>
-            <p class="card-text"> {{ hotel.price_per_night }}$ per night</p>
-            <a href="{% url 'hotel_page' hotel.id %}" class="btn btn-primary">Book Now</a>
+<div class="container my-4">
+    <!-- Пошукова панель бутік-готелів -->
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="p-5 search-panel">
+                <h1 class="display-6 fw-bold mb-4">Знайдіть свій ідеальний готель</h1>
+                <form method="get" class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" name="q" class="form-control form-control-lg bg-white border-0 shadow-sm" placeholder="Назва готелю або місто..." value="{{ query }}">
+                    </div>
+                    <div class="col-md-4">
+                        <select name="room_type" class="form-select form-select-lg bg-white border-0 shadow-sm">
+                            <option value="">Всі типи номерів у готелях</option>
+                            <option value="standard" {% if selected_room_type == 'standard' %}selected{% endif %}>Standard</option>
+                            <option value="deluxe" {% if selected_room_type == 'deluxe' %}selected{% endif %}>Deluxe</option>
+                            <option value="suite" {% if selected_room_type == 'suite' %}selected{% endif %}>Suite</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-luxury w-100 h-100">Пошук</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        </div>
-        
-    {% endfor %}
+    </div>
 
-{% endblock  %}
+    <!-- Заголовок секції -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-0">Доступні готелі</h3>
+            <p class="text-muted small mb-0">Добірка найкращих пропозицій для вашого відпочинку</p>
+        </div>
+        <span class="badge bg-white text-dark border px-3 py-2 rounded-pill shadow-sm">Знайдено: {{ hotels|length }}</span>
+    </div>
+
+    <!-- Сітка карток готелів -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for hotel in hotels %}
+            <div class="col">
+                <div class="card h-100 hotel-card">
+                    <div style="height: 220px; overflow: hidden;" class="card-img-wrapper">
+                        {% if hotel.image %}
+                            <img src="{{ hotel.image.url }}" class="card-img-top w-100 h-100" alt="{{ hotel.hotel_name }}" style="object-fit: cover;">
+                        {% else %}
+                            <img src="https://via.placeholder.com/400x300?text=Hotel+Image" class="card-img-top w-100 h-100" alt="No image" style="object-fit: cover;">
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card-body d-flex flex-column p-4">
+                        <h5 class="card-title fw-bold text-dark mb-1">{{ hotel.hotel_name }}</h5>
+                        <p class="card-text text-muted small mb-3"><i class="bi bi-geo-alt text-warning"></i> {{ hotel.hotel_address }}</p>
+                        <p class="card-text small text-secondary mb-4">Категорія номера: <strong class="text-dark">{{ hotel.get_room_type_display }}</strong></p>
+                        
+                        <div class="mt-auto pt-3 border-top d-flex align-items-center justify-content-between">
+                            <div>
+                                <span class="fs-4 fw-bold text-dark">${{ hotel.price_per_night }}</span> 
+                                <span class="text-muted small">/ ніч</span>
+                            </div>
+                            <a href="{% url 'hotel_page' hotel.id %}" class="btn btn-luxury btn-sm">Детальніше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fs-5">За вашим запитом готелів не знайдено.</p>
+                <a href="{% url 'home' %}" class="btn btn-outline-dark mt-2">Скинути фільтри</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

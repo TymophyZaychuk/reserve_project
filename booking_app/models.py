@@ -38,6 +38,15 @@ class Reservation(models.Model):
     def __str__(self):
         return f"{self.guest.name} - {self.hotel.hotel_name}"
 
+class Review(models.Model):
+    guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    comment = models.TextField()
+    review_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.guest.name} - {self.hotel.hotel_name} - {self.rating}"
+
 class Meta:
     verbose_name = "Reservation"
     verbose_name_plural = "Reservations"

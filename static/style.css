@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,600&display=swap');
+
+:root {
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --primary-dark: #141414;
+    --accent-gold: #c5a059;
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- КРУТИЙ АНІМОВАНИЙ ФОН --- */
+body {
+    font-family: var(--font-body) !important;
+    color: var(--primary-dark);
+    overflow-x: hidden;
+    background-color: #f7f5f0;
+    /* Багатошаровий стильний градієнт та ледь помітна сітка */
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(197, 160, 89, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(20, 20, 20, 0.04) 0px, transparent 50%),
+        linear-gradient(135deg, #f9f8f5 0%, #f2efe9 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, .card-title {
+    font-family: var(--font-heading) !important;
+    letter-spacing: -0.5px;
+}
+
+/* --- НАВІГАЦІЯ ТА АНІМАЦІЇ НАВЕДЕННЯ --- */
+.custom-navbar {
+    background: rgba(249, 248, 245, 0.8) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.custom-navbar .navbar-brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--primary-dark) !important;
+    letter-spacing: -0.5px;
+}
+
+.custom-navbar .nav-link {
+    position: relative;
+    color: #4a4a4a !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    transition: var(--transition-smooth);
+}
+
+/* Ефект підкреслення при наведенні на меню */
+.custom-navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background-color: var(--accent-gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-navbar .nav-link:hover::after,
+.custom-navbar .nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.custom-navbar .nav-link:hover {
+    color: var(--accent-gold) !important;
+    transform: translateY(-2px);
+}
+
+/* --- ПОШУКОВА ПАНЕЛЬ (СКЛОМОРФІЗМ) --- */
+.search-panel {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+}
+
+/* --- КАРТКИ ГОТЕЛІВ --- */
+.hotel-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.hotel-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(197, 160, 89, 0.18);
+    border-color: rgba(197, 160, 89, 0.4);
+    background: rgba(255, 255, 255, 1);
+}
+
+.hotel-card .card-img-top {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hotel-card:hover .card-img-top {
+    transform: scale(1.07);
+}
+
+/* --- КНОПКИ --- */
+.btn-luxury {
+    background-color: var(--primary-dark);
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--primary-dark);
+}
+
+.btn-luxury:hover {
+    background-color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.35);
+}
