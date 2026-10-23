@@ -2,55 +2,47 @@
 
 {% block content %}
 <div class="container my-5">
-    <!-- Навігація назад -->
     <div class="mb-4">
-        <a href="{% url 'home' %}" class="text-decoration-none text-muted fw-semibold small">
-            <i class="bi bi-arrow-left"></i> Назад до списку готелів
+        <a href="{% url 'home' %}" class="btn btn-brutal btn-sm">
+            ← НАЗАД ДО СПИСКУ
         </a>
     </div>
 
     <div class="row g-5 align-items-start">
-        <!-- Фото готелю -->
         <div class="col-lg-6">
-            <div class="hotel-card border-0 shadow-sm overflow-hidden">
+            <div class="hotel-card overflow-hidden">
                 {% if hotel.image %}
-                    <img src="{{ hotel.image.url }}" class="card-img-top w-100" alt="{{ hotel.hotel_name }}" style="height: 450px; object-fit: cover;">
+                    <img src="{{ hotel.image.url }}" class="w-100" alt="{{ hotel.hotel_name }}" style="height: 450px; object-fit: cover; filter: grayscale(10%);">
                 {% else %}
-                    <img src="https://via.placeholder.com/600x450?text=Hotel+Image" class="card-img-top w-100" alt="No image" style="height: 450px; object-fit: cover;">
+                    <img src="https://via.placeholder.com/600x450?text=NO_IMAGE" class="w-100" alt="No image" style="height: 450px; object-fit: cover;">
                 {% endif %}
             </div>
         </div>
 
-        <!-- Інформація про готель -->
         <div class="col-lg-6">
-            <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm border border-light">
-                <span class="badge bg-light text-dark border mb-3">Ексклюзивний готель</span>
-                <h1 class="display-5 fw-bold mb-3 text-dark">{{ hotel.hotel_name }}</h1>
+            <div class="search-panel p-4 p-md-5">
+                <span class="badge bg-dark text-white p-2 mb-3 rounded-0">ГОТЕЛЬ</span>
+                <h1 class="display-5 mb-3">{{ hotel.hotel_name }}</h1>
                 
-                <p class="text-muted mb-3">
-                    <i class="bi bi-geo-alt text-warning"></i> {{ hotel.hotel_address }}
+                <p class="text-muted mb-2">
+                    <strong>ЛОКАЦІЯ:</strong> {{ hotel.hotel_address }}
                 </p>
-                <p class="text-secondary mb-4">
-                    Тип номера: <strong class="text-dark">{{ hotel.get_room_type_display }}</strong> 
-                    <span class="mx-2">•</span> 
-                    Вільних номерів: <strong class="text-dark">{{ hotel.rooms }}</strong>
+                <p class="mb-4">
+                    ТИП НОМЕРА: <strong>{{ hotel.get_room_type_display|upper }}</strong> | ВІЛЬНО: <strong>{{ hotel.rooms }}</strong>
                 </p>
 
-                <hr class="my-4 text-muted opacity-25">
+                <hr class="border-dark opacity-100 my-4">
 
-                <h4 class="mb-3">Про цей готель</h4>
+                <h4 class="mb-3">ОПИС</h4>
                 <p class="text-muted lh-lg mb-4">{{ hotel.description }}</p>
 
-                <!-- Блок ціни -->
-                <div class="d-flex align-items-center justify-content-between p-4 bg-light rounded-3 mb-4">
-                    <div>
-                        <span class="text-muted small d-block">Вартість проживання</span>
-                        <span class="fs-3 fw-bold text-dark">${{ hotel.price_per_night }}</span> <span class="text-muted small">/ ніч</span>
-                    </div>
+                <div class="d-flex align-items-center justify-content-between p-3 bg-light border border-dark mb-4">
+                    <span class="fw-bold">ЦІНА ЗА НІЧ:</span>
+                    <span class="fs-3 fw-bold">${{ hotel.price_per_night }}</span>
                 </div>
 
-                <a href="#" class="btn btn-luxury w-100 py-3">
-                    <i class="bi bi-calendar-check me-2"></i> Забронювати номер у готелі
+                <a href="#" class="btn btn-brutal w-100 py-3 text-center">
+                    ЗАБРОНЮВАТИ НОМЕР
                 </a>
             </div>
         </div>

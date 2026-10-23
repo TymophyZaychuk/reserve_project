@@ -1,133 +1,133 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&display=swap');
 
 :root {
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
-    --primary-dark: #141414;
-    --accent-gold: #c5a059;
-    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --font-heading: 'Syne', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --bg-color: #f4f4f0;
+    --card-bg: #ffffff;
+    --text-color: #0d0d0d;
+    --accent-color: #ccff00; /* Кислотний лайм для зухвалих акцентів */
+    --border-hard: 2px solid #0d0d0d;
+    --shadow-brutal: 5px 5px 0px #0d0d0d;
+    --transition-brutal: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* --- КРУТИЙ АНІМОВАНИЙ ФОН --- */
 body {
     font-family: var(--font-body) !important;
-    color: var(--primary-dark);
-    overflow-x: hidden;
-    background-color: #f7f5f0;
-    /* Багатошаровий стильний градієнт та ледь помітна сітка */
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(197, 160, 89, 0.08) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(20, 20, 20, 0.04) 0px, transparent 50%),
-        linear-gradient(135deg, #f9f8f5 0%, #f2efe9 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    background-image: radial-gradient(#d1d1cc 1px, transparent 1px);
+    background-size: 24px 24px; /* Текстура точкового паперу замість розмитих градієнтів */
+    margin: 0;
 }
 
 h1, h2, h3, h4, h5, h6, .card-title {
     font-family: var(--font-heading) !important;
-    letter-spacing: -0.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -1px;
 }
 
-/* --- НАВІГАЦІЯ ТА АНІМАЦІЇ НАВЕДЕННЯ --- */
+/* --- НАВІГАЦІЯ (Бруталізм) --- */
 .custom-navbar {
-    background: rgba(249, 248, 245, 0.8) !important;
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(197, 160, 89, 0.15);
-    transition: var(--transition-smooth);
+    background: var(--card-bg) !important;
+    border-bottom: var(--border-hard);
+    padding: 1rem 0;
 }
 
 .custom-navbar .navbar-brand {
     font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.6rem;
-    color: var(--primary-dark) !important;
-    letter-spacing: -0.5px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--text-color) !important;
+    letter-spacing: -1px;
 }
 
 .custom-navbar .nav-link {
-    position: relative;
-    color: #4a4a4a !important;
-    font-weight: 500;
-    padding: 0.5rem 1rem !important;
-    transition: var(--transition-smooth);
+    font-weight: 600;
+    color: var(--text-color) !important;
+    border: 2px solid transparent;
+    padding: 0.4rem 0.8rem !important;
+    margin-left: 5px;
+    transition: var(--transition-brutal);
 }
 
-/* Ефект підкреслення при наведенні на меню */
-.custom-navbar .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 1rem;
-    right: 1rem;
-    height: 2px;
-    background-color: var(--accent-gold);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+/* Нетиповий ефект наведення на меню: жирна рамка та зсув */
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+    background-color: var(--accent-color);
+    border: var(--border-hard);
+    box-shadow: 3px 3px 0px #0d0d0d;
+    transform: translate(-2px, -2px);
 }
 
-.custom-navbar .nav-link:hover::after,
-.custom-navbar .nav-link.active::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
-.custom-navbar .nav-link:hover {
-    color: var(--accent-gold) !important;
-    transform: translateY(-2px);
-}
-
-/* --- ПОШУКОВА ПАНЕЛЬ (СКЛОМОРФІЗМ) --- */
+/* --- ПОШУКОВА ПАНЕЛЬ --- */
 .search-panel {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(197, 160, 89, 0.25);
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+    background: var(--card-bg);
+    border: var(--border-hard);
+    box-shadow: var(--shadow-brutal);
+    border-radius: 0px; /* Повна відмова від заокруглень — чистий архітектурний стиль */
+    padding: 2.5rem;
+}
+
+.search-panel .form-control,
+.search-panel .form-select {
+    border: var(--border-hard);
+    border-radius: 0px;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+}
+
+.search-panel .form-control:focus,
+.search-panel .form-select:focus {
+    box-shadow: 3px 3px 0px #0d0d0d;
+    border-color: #0d0d0d;
+    background-color: #fff;
 }
 
 /* --- КАРТКИ ГОТЕЛІВ --- */
 .hotel-card {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: var(--transition-smooth);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    background: var(--card-bg);
+    border: var(--border-hard);
+    border-radius: 0px;
+    box-shadow: var(--shadow-brutal);
+    transition: var(--transition-brutal);
 }
 
+/* Жорстка анімація наведення замість «плюшевого» підняття */
 .hotel-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 50px rgba(197, 160, 89, 0.18);
-    border-color: rgba(197, 160, 89, 0.4);
-    background: rgba(255, 255, 255, 1);
+    transform: translate(-4px, -4px);
+    box-shadow: 9px 9px 0px #0d0d0d;
 }
 
 .hotel-card .card-img-top {
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    border-bottom: var(--border-hard);
+    filter: grayscale(20%); /* Трохи суворого стилю для фото */
+    transition: filter 0.3s ease;
 }
 
 .hotel-card:hover .card-img-top {
-    transform: scale(1.07);
+    filter: grayscale(0%);
 }
 
 /* --- КНОПКИ --- */
-.btn-luxury {
-    background-color: var(--primary-dark);
+.btn-brutal {
+    background-color: var(--text-color);
     color: #fff;
-    border-radius: 8px;
-    padding: 12px 24px;
-    font-weight: 500;
-    transition: var(--transition-smooth);
-    border: 1px solid var(--primary-dark);
+    border: var(--border-hard);
+    border-radius: 0px;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0px var(--accent-color);
+    transition: var(--transition-brutal);
 }
 
-.btn-luxury:hover {
-    background-color: var(--accent-gold);
-    border-color: var(--accent-gold);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.35);
+.btn-brutal:hover {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    box-shadow: 3px 3px 0px #0d0d0d;
+    transform: translate(-2px, -2px);
 }

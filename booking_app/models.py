@@ -1,14 +1,7 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
-class Guest(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    phone_number = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name
-
 class Hotel(models.Model):
     ROOM_TYPES = [
         ('standard', 'Standard'),
@@ -30,22 +23,22 @@ class Hotel(models.Model):
     
 class Reservation(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     reservation_start_date = models.DateField()
     reservation_end_date = models.DateField()
     rooms_booked = models.IntegerField()
 
     def __str__(self):
-        return f"{self.guest.name} - {self.hotel.hotel_name}"
+        return f"{self.user.username} - {self.hotel.hotel_name}"
 
 class Review(models.Model):
-    guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     rating = models.IntegerField()
     comment = models.TextField()
     review_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.guest.name} - {self.hotel.hotel_name} - {self.rating}"
+        return f"{self.user.username} - {self.rating}"
 
 class Meta:
     verbose_name = "Reservation"
