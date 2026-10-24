@@ -1,9 +1,55 @@
-{%extends 'base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <form method ="post" action="{% url 'register' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+<div class="register-wrapper">
+    <div class="register-panel">
+        <div class="register-header">
+            
+            <h2>Реєстрація</h2>
+            <p>Створи свій акаунт, щоб продовжити.</p>
+        </div>
+
+        <form method="post" action="{% url 'register' %}" class="register-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="register-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="register-field">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <div class="register-help">
+                            {{ field.help_text|safe }}
+                        </div>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <div class="register-errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-brutal register-submit">
+                Зареєструватися ↗
+            </button>
+        </form>
+
+        <div class="register-footer">
+            <span>ВЖЕ МАЄШ АКАУНТ?</span>
+            <a href="{% url 'login' %}">Увійти →</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

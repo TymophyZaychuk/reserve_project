@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="account-wrapper">
+    <div class="account-panel">
+
+
+        <div class="account-identity">
+            <div class="account-avatar">
+                {{ user.username|first|upper }}
+            </div>
+
+            <div class="account-identity-info">
+                <span class="account-small-label">SIGNED IN AS</span>
+                <h2>{{ user.username }}</h2>
+                <span class="account-status">
+                    <span class="account-status-dot"></span>
+                    Авторизований користувач
+                </span>
+            </div>
+        </div>
+
+        <div class="account-details">
+            <div class="account-detail">
+                <span class="account-detail-label">USERNAME</span>
+                <span class="account-detail-value">
+                    {{ user.username }}
+                </span>
+            </div>
+
+            <div class="account-detail">
+                <span class="account-detail-label">EMAIL ADDRESS</span>
+                <span class="account-detail-value">
+                    {{ user.email|default:"Не вказано" }}
+                </span>
+            </div>
+
+            <div class="account-detail">
+                <span class="account-detail-label">ACCOUNT STATUS</span>
+                <span class="account-detail-value">
+                    {% if user.is_active %}
+                        ACTIVE / Активний
+                    {% else %}
+                        INACTIVE / Неактивний
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <div class="account-actions">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-brutal account-logout">
+                    Вийти з акаунта ↗
+                </button>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

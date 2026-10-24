@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="register-wrapper">
+    <div class="register-panel login-panel">
+
+        <div class="register-header">
+
+            <h2>Вхід в акаунт</h2>
+            <p>Продовжуй з того місця, де зупинився.</p>
+        </div>
+
+        <form method="post" action="{% url 'login' %}" class="register-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="register-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="register-field">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <div class="register-errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+
+            <button type="submit" class="btn-brutal register-submit">
+                Увійти в акаунт ↗
+            </button>
+        </form>
+
+        <div class="register-footer">
+            <span>ЩЕ НЕ З НАМИ?</span>
+            <a href="{% url 'register' %}">Створити акаунт →</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

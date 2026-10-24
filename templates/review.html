@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="review-wrapper">
+    <div class="review-panel">
+
+        <div class="review-header">
+            <h1>Залишити відгук</h1>
+            <p>Поділися своїми враженнями та допоможи іншим зробити вибір.</p>
+        </div>
+
+        <form method="post" class="review-form">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="review-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="review-field">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <div class="review-help">
+                            {{ field.help_text }}
+                        </div>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <div class="review-errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-brutal review-submit">
+                Опублікувати відгук ↗
+            </button>
+        </form>
+
+        <div class="review-footer">
+            <span>YOUR OPINION MATTERS</span>
+            <a href="javascript:history.back()">← Назад</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

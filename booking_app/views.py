@@ -9,3 +9,15 @@ def hotel_page(request, hotel_id):
     hotel = Hotel.objects.get(id=hotel_id)
     return render(request, 'hotel_page.html', {'hotel': hotel})
 
+def review(request):
+    if request.method == 'POST':
+        user = request.user
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+
+        review = Review(user=user, rating=rating, comment=comment)
+        review.save()
+
+        return render(request, 'review.html', {'success': True})
+
+    return render(request, 'review.html')
