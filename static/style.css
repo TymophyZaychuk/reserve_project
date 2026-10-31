@@ -655,3 +655,78 @@ h1, h2, h3, h4, h5, h6, .card-title {
         padding: 1.5rem;
     }
 }
+
+/* --- БРОНЮВАННЯ НА СТОРІНЦІ ГОТЕЛЮ --- */
+
+.booking-panel {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #fff;
+    border: var(--border-hard);
+    box-shadow: var(--shadow-brutal);
+}
+
+.booking-label {
+    display: inline-block;
+    padding: 0.35rem 0.6rem;
+    background: var(--accent-color);
+    border: var(--border-hard);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.booking-field {
+    margin-bottom: 1.25rem;
+}
+
+.booking-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.booking-field input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem;
+    border: var(--border-hard);
+    border-radius: 0;
+    background: #fff;
+    color: var(--text-color);
+    font-family: var(--font-body);
+    font-weight: 600;
+}
+
+.booking-field input:focus {
+    outline: none;
+    background: #fcfff0;
+    box-shadow: 3px 3px 0 var(--accent-color);
+}
+
+.booking-message {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: var(--border-hard);
+    background: var(--accent-color);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.hotel-no-image {
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5e5df;
+    border: var(--border-hard);
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 480px) {
+    .booking-panel {
+        padding: 1rem;
+    }
+}

@@ -21,15 +21,33 @@ class Hotel(models.Model):
         return self.hotel_name
 
     
-class Reservation(models.Model):
+class Room(models.Model):
+    ROOM_TYPES = [
+        ('standard', 'Standard'),
+        ('deluxe', 'Deluxe'),
+        ('suite', 'Suite'),
+    ]
+
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    room_type = models.CharField(max_length=20, choices=ROOM_TYPES)
+    rooms = models.IntegerField()
+    price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()
+    image = models.ImageField(upload_to='rooms/', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.hotel.hotel_name} - {self.room_type}"
+
+    
+class Reservation(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     reservation_start_date = models.DateField()
     reservation_end_date = models.DateField()
     rooms_booked = models.IntegerField()
 
     def __str__(self):
-        return f"{self.user.username} - {self.hotel.hotel_name}"
+        return f"{self.user.username} - {self.room}"
 
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

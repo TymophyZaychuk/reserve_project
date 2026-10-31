@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="booking-panel text-center p-5">
+
+        <h1 class="mb-4">БРОНЮВАННЯ УСПІШНЕ!</h1>
+
+        <h3>{{ hotel.hotel_name }}</h3>
+
+        <p class="mt-4">
+            Ваше бронювання успішно створено.
+        </p>
+
+        <p>
+            Найближчим часом вам надійде запит щодо підтвердження бронювання.
+        </p>
+
+        <a href="{% url 'home' %}" class="btn-brutal mt-4">
+            ПОВЕРНУТИСЯ ДО ГОТЕЛІВ
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

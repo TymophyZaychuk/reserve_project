@@ -1,0 +1,203 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+
+    <div class="mb-4">
+        <a href="{% url 'hotel_page' room.hotel.id %}"
+           class="btn btn-brutal btn-sm">
+            ← НАЗАД ДО ГОТЕЛЮ
+        </a>
+    </div>
+
+    <div class="row g-5 align-items-start">
+
+        <!-- ЛІВА ЧАСТИНА: ФОТО ТА ОПИС -->
+        <div class="col-lg-6">
+
+            <div class="hotel-card overflow-hidden">
+
+                {% if room.image %}
+                    <img src="{{ room.image.url }}"
+                         class="w-100"
+                         alt="{{ room.get_room_type_display }}"
+                         style="height: 450px; object-fit: cover;">
+                {% else %}
+                    <div class="hotel-no-image">
+                        NO IMAGE AVAILABLE
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="search-panel p-4 mt-4">
+
+                <span class="badge bg-dark text-white p-2 mb-3 rounded-0">
+                    ПРО НОМЕР
+                </span>
+
+                <h3 class="mb-3">ОПИС</h3>
+
+                <p class="text-muted lh-lg mb-0">
+                    {{ room.description }}
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ПРАВА ЧАСТИНА: ІНФОРМАЦІЯ -->
+        <div class="col-lg-6">
+
+            <div class="search-panel p-4 p-md-5">
+
+                <span class="badge bg-dark text-white p-2 mb-3 rounded-0">
+                    {{ room.hotel.hotel_name }}
+                </span>
+
+                <h1 class="display-5 mb-3">
+                    {{ room.get_room_type_display|upper }}
+                </h1>
+
+                <p class="text-muted mb-2">
+                    <strong>ГОТЕЛЬ:</strong>
+                    {{ room.hotel.hotel_name }}
+                </p>
+
+                <p class="text-muted mb-4">
+                    <strong>ЛОКАЦІЯ:</strong>
+                    {{ room.hotel.hotel_address }}
+                </p>
+
+                <hr class="border-dark opacity-100 my-4">
+
+                <div class="d-flex align-items-center justify-content-between p-3 bg-light border border-dark mb-3">
+
+                    <span class="fw-bold">
+                        ВІЛЬНО НОМЕРІВ:
+                    </span>
+
+                    <span class="fs-4 fw-bold">
+                        {{ room.rooms }}
+                    </span>
+
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between p-3 bg-light border border-dark mb-4">
+
+                    <span class="fw-bold">
+                        ЦІНА ЗА НІЧ:
+                    </span>
+
+                    <span class="fs-3 fw-bold">
+                        ${{ room.price_per_night }}
+                    </span>
+
+                </div>
+
+                <!-- БРОНЮВАННЯ -->
+                <div class="booking-panel">
+
+                    <details>
+
+                        <summary class="btn-brutal w-100 py-3">
+                            ЗАБРОНЮВАТИ НОМЕР ↗
+                        </summary>
+
+                        <h3 class="mt-4 mb-4">
+                            ІНФОРМАЦІЯ ПРО БРОНЮВАННЯ
+                        </h3>
+
+                        {% if user.is_authenticated %}
+
+                            {% if room.rooms > 0 %}
+
+                                <form method="post"
+                                      action="{% url 'room_page' room.id %}">
+
+                                    {% csrf_token %}
+
+                                    <div class="booking-field">
+
+                                        <label for="reservation_start_date">
+                                            Дата заїзду
+                                        </label>
+
+                                        <input type="date"
+                                               id="reservation_start_date"
+                                               name="reservation_start_date"
+                                               min="{{ today }}"
+                                               required>
+
+                                    </div>
+
+                                    <div class="booking-field">
+
+                                        <label for="reservation_end_date">
+                                            Дата виїзду
+                                        </label>
+
+                                        <input type="date"
+                                               id="reservation_end_date"
+                                               name="reservation_end_date"
+                                               min="{{ today }}"
+                                               required>
+
+                                    </div>
+
+                                    <div class="booking-field">
+
+                                        <label for="rooms_booked">
+                                            Кількість номерів
+                                        </label>
+
+                                        <input type="number"
+                                               id="rooms_booked"
+                                               name="rooms_booked"
+                                               min="1"
+                                               max="{{ room.rooms }}"
+                                               value="1"
+                                               required>
+
+                                    </div>
+
+                                    <button type="submit"
+                                            class="btn-brutal w-100 mt-3">
+                                        ПІДТВЕРДИТИ БРОНЮВАННЯ ↗
+                                    </button>
+
+                                </form>
+
+                            {% else %}
+
+                                <p class="mt-3">
+                                    На жаль, зараз вільних номерів немає.
+                                </p>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <p class="mt-3">
+                                Щоб забронювати номер, спочатку увійди в акаунт.
+                            </p>
+
+                            <a href="{% url 'login' %}"
+                               class="btn-brutal w-100 text-center">
+                                УВІЙТИ В АКАУНТ
+                            </a>
+
+                        {% endif %}
+
+                    </details>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="container my-5">
+
     <div class="mb-4">
         <a href="{% url 'home' %}" class="btn btn-brutal btn-sm">
             ← НАЗАД ДО СПИСКУ
@@ -9,47 +10,117 @@
     </div>
 
     <div class="row g-5 align-items-start">
+
+        <!-- ЛІВА ЧАСТИНА -->
         <div class="col-lg-6">
+
             <div class="hotel-card overflow-hidden">
                 {% if hotel.image %}
-                    <img src="{{ hotel.image.url }}" class="w-100" alt="{{ hotel.hotel_name }}" style="height: 450px; object-fit: cover; filter: grayscale(10%);">
+                    <img src="{{ hotel.image.url }}"
+                         class="w-100"
+                         alt="{{ hotel.hotel_name }}"
+                         style="height: 450px; object-fit: cover;">
                 {% else %}
-                    <img src="https://via.placeholder.com/600x450?text=NO_IMAGE" class="w-100" alt="No image" style="height: 450px; object-fit: cover;">
+                    <div class="hotel-no-image">
+                        NO IMAGE AVAILABLE
+                    </div>
                 {% endif %}
             </div>
+
+            <div class="search-panel p-4 mt-4">
+                <span class="badge bg-dark text-white p-2 mb-3 rounded-0">
+                    ПРО ГОТЕЛЬ
+                </span>
+
+                <h3 class="mb-3">ОПИС</h3>
+
+                <p class="text-muted lh-lg mb-0">
+                    {{ hotel.description }}
+                </p>
+            </div>
+
         </div>
 
+        <!-- ПРАВА ЧАСТИНА -->
         <div class="col-lg-6">
+
             <div class="search-panel p-4 p-md-5">
-                <span class="badge bg-dark text-white p-2 mb-3 rounded-0">ГОТЕЛЬ</span>
-                <h1 class="display-5 mb-3">{{ hotel.hotel_name }}</h1>
-                
-                <p class="text-muted mb-2">
-                    <strong>ЛОКАЦІЯ:</strong> {{ hotel.hotel_address }}
-                </p>
-                <p class="mb-4">
-                    ТИП НОМЕРА: <strong>{{ hotel.get_room_type_display|upper }}</strong> | ВІЛЬНО: <strong>{{ hotel.rooms }}</strong>
+
+                <span class="badge bg-dark text-white p-2 mb-3 rounded-0">
+                    ГОТЕЛЬ
+                </span>
+
+                <h1 class="display-5 mb-3">
+                    {{ hotel.hotel_name }}
+                </h1>
+
+                <p class="text-muted mb-4">
+                    <strong>ЛОКАЦІЯ:</strong>
+                    {{ hotel.hotel_address }}
                 </p>
 
                 <hr class="border-dark opacity-100 my-4">
 
-                <h4 class="mb-3">ОПИС</h4>
-                <p class="text-muted lh-lg mb-4">{{ hotel.description }}</p>
+                <h3 class="mb-4">ДОСТУПНІ НОМЕРИ</h3>
 
-                <div class="d-flex align-items-center justify-content-between p-3 bg-light border border-dark mb-4">
-                    <span class="fw-bold">ЦІНА ЗА НІЧ:</span>
-                    <span class="fs-3 fw-bold">${{ hotel.price_per_night }}</span>
-                </div>
+                {% for room in rooms %}
 
-                <a href="#" class="btn btn-brutal w-100 py-3 text-center">
-                    ЗАБРОНЮВАТИ НОМЕР
-                </a>
-                <a href="{% url 'review' %}" class="btn btn-brutal w-100 py-2 text-center">
+                    <a href="{% url 'room_page' room.id %}"
+                       class="text-decoration-none text-dark">
+
+                        <div class="hotel-card p-3 mb-4">
+
+                            {% if room.image %}
+                                <img src="{{ room.image.url }}"
+                                     class="w-100"
+                                     alt="{{ room.get_room_type_display }}"
+                                     style="height: 220px; object-fit: cover;">
+                            {% else %}
+                                <div class="hotel-no-image">
+                                    NO IMAGE AVAILABLE
+                                </div>
+                            {% endif %}
+
+                            <h4 class="mt-3">
+                                {{ room.get_room_type_display|upper }}
+                            </h4>
+
+                            <p class="mb-2">
+                                ВІЛЬНО:
+                                <strong>{{ room.rooms }}</strong>
+                            </p>
+
+                            <p class="fs-4 fw-bold mb-3">
+                                ${{ room.price_per_night }} / НІЧ
+                            </p>
+
+                            <span class="btn-brutal d-block text-center py-2">
+                                ПЕРЕГЛЯНУТИ НОМЕР ↗
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                {% empty %}
+
+                    <p class="text-muted">
+                        Наразі в цьому готелі немає доступних номерів.
+                    </p>
+
+                {% endfor %}
+
+                <hr class="border-dark opacity-100 my-4">
+
+                <a href="{% url 'review' %}"
+                   class="btn-brutal w-100 py-3 text-center">
                     НАДІСЛАТИ ВІДГУК
                 </a>
-            
+
             </div>
+
         </div>
+
     </div>
 </div>
 {% endblock %}
